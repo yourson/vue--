@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,body,#app{
+  height: 100%;
+  width: 100%;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+.clearfix:after {
+  content: "";
+  height: 0;
+  display: block;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
+}
