@@ -26,34 +26,34 @@ vue全家桶、vuex、echarts、mock
 ```
 登录：
 
-！[](./public/static/img/登录.png)
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/登录.png)
 
 首页：
 
-！[](./public/static/img/首页.png)
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/首页.png)
 
 表格：
 
-！[](./public/static/img/表格.png)
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/表格.png)
 
 echarts：
 
-！[](./public/static/img/echarts.png)
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/echarts.png)
 
 富文本：
 
-！[](./public/static/img/富文本.png)
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/富文本.png)
 
 首页：
 
-！[](./public/static/img/首页.png)
-### Compiles and hot-reloads for development
+！[](https://github.com/yourson/vue-system/raw/main/public/static/img/首页.png)
+
+### 运行项目
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
+### 项目打包```
 npm run build
 ```
 
