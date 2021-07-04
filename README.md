@@ -26,27 +26,23 @@ vue全家桶、vuex、echarts、mock
 ```
 登录：
 
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/登录.png)
+！[image](https://github.com/yourson/vue-system/tree/main/public/static/img登录.png)
 
 首页：
 
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/首页.png)
+！[image](https://github.com/yourson/vue-system/tree/main/public/static/img/首页.png)
 
 表格：
 
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/表格.png)
+！[image](https://github.com/yourson/vue-system/tree/main/public/static/img/表格.png)
 
 echarts：
 
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/echarts.png)
+！[image](https://github.com/yourson/vue-system/tree/main/public/static/img/echarts.png)
 
 富文本：
 
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/富文本.png)
-
-首页：
-
-！[](https://github.com/yourson/vue-system/raw/main/public/static/img/首页.png)
+！[image](https://github.com/yourson/vue-system/tree/main/public/static/img/富文本.png)
 
 ### 运行项目
 ```
