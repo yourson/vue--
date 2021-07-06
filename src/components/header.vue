@@ -8,35 +8,42 @@
       <div class="menu-title clearfix">菜单选择</div>
     </div>
     <div class="header-right">
-      <div class="header-user-con">
-        <!-- 全屏显示 -->
-        <div class="fullScreen" @click="handleFullScreen">
-          <el-tooltip effect="dark" :content="fullscreen?'取消全屏':'全屏显示'">
-            <i class="el-icon-rank"></i>
-          </el-toolTip>
+        <!--面包屑-->
+        <div class="bread-crumb">
+          <el-breadcrumb class="color-bread-crumb" separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+            <el-breadcrumb-item >活动列表</el-breadcrumb-item>
+          </el-breadcrumb>
         </div>
-        <!-- 消息中心 -->
-        <div class="tip">
-          <el-tooltip
-            effect="dark"
-            :content="message?`有${message}条消息`:'消息中心'"
-            placement="top"
-          >
-            <i class="el-icon-message"></i>
-          </el-tooltip>
-        </div>
-        <!-- 用户头像 -->
-        <div class="user-avator">
-          <img src="../assets/imgs/img.jpg" />
-        </div>
-        <!-- 用户名下拉菜单 -->
-        <div class="user-name">
-          <el-dropdown
-            class="user-name"
-            size="small"
-            trigger="click"
-            @command="handleClick"
-          >
+        <div class="userInfo">
+          <!-- 全屏显示 -->
+          <div class="fullScreen" @click="handleFullScreen">
+            <el-tooltip effect="dark" :content="fullscreen?'取消全屏':'全屏显示'">
+              <i class="el-icon-rank"></i>
+            </el-toolTip>
+          </div>
+          <!-- 消息中心 -->
+          <div class="tip">
+            <el-tooltip
+              effect="dark"
+              :content="message?`有${message}条消息`:'消息中心'"
+              placement="top"
+            >
+              <i class="el-icon-message"></i>
+            </el-tooltip>
+          </div>
+          <!-- 用户头像 -->
+          <div class="user-avator">
+            <img src="../assets/imgs/img.jpg" />
+          </div>
+          <!-- 用户名下拉菜单 -->
+          <div class="user-name">
+            <el-dropdown
+              size="small"
+              trigger="click"
+              @command="handleClick"
+            >
               <span class="el-dropdown-link">
                   {{username}}
                   <i class="el-icon-caret-bottom"></i>
@@ -46,9 +53,9 @@
                 <el-dropdown-item command="setUp">设置</el-dropdown-item>
                 <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
-          </el-dropdown>
+            </el-dropdown>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -67,7 +74,7 @@ export default {
     ...mapState(['username', "collapse"])
   },
   created () {
-
+    console.log(this.$route)
   },
   methods: {
     ...mapMutations({
@@ -123,39 +130,48 @@ export default {
 
 <style scoped>
   .header {
-    position: relative;
-    width: 100%;
+    display: flex;
     height: 70px;
     font-size: 22px;
     background-color: #242f42;
     color: #fff;
   }
+  .header .el-breadcrumb__item >>> .el-breadcrumb__inner
+  {
+    /*color: #fff !important;*/
+    color: #fff;
+  }
+  /*.header .el-breadcrumb__item >>> .el-breadcrumb__inner .is-link:hover {*/
+    /*color: #409EFF !important;*/
+  /*}*/
   .menu-select {
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 250px;
     cursor: pointer;
+    display: flex;
   }
   .menu-icon {
-    float: left;
     padding: 0 20px;
     line-height: 70px;
   }
   .menu-title {
-    float: left;
     line-height: 70px;
   }
   .header-right {
-    float: right;
-    padding-right: 50px;
+    width: calc(100% - 250px);
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 70px;
   }
-  .header-user-con {
-    display: flex;
+  .bread-crumb {
+    line-height: 70px;
+  }
+  .userInfo {
+    display: inline-flex;
     align-items: center;
     line-height: 70px;
   }
   .fullScreen,.tip,.user-avator {
-    /* float: left; */
     padding: 0 10px;
     cursor: pointer;
   }
@@ -163,12 +179,14 @@ export default {
     border-radius: 50%;
     overflow: hidden;
   }
+  .user-name {
+    margin-right: 10px;
+  }
   .user-avator img{
     display: block;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-
   }
   .header .el-dropdown-link {
     cursor: pointer;

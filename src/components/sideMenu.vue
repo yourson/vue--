@@ -29,7 +29,7 @@
         <template v-else>
           <!-- 子菜单项 -->
           <el-submenu
-            :index="item.id"
+            :index="item.id+''"
             :key="item.id"
           >
           <!-- 含有子菜单的菜单项名称和图标 -->
@@ -43,7 +43,7 @@
               <el-submenu
                 v-if="subItem.children"
                 :key="subItem.id"
-                :index="subItem.id"
+                :index="subItem.id+''"
               >
                 <!-- 三级菜单标题 -->
                 <template slot="title">
@@ -98,6 +98,13 @@ export default {
       this.sideMenu = this.authRoutes
     }
   },
+//  filters: {
+//    itemId (value) {
+//      if (!value) return ''
+////      console.log(typeof value.toString())
+//      return value.toString()
+//    }
+//  },
   methods: {
     ...mapMutations({
       addTab: 'addTab',

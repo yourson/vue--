@@ -115,6 +115,6 @@ Mock.mock(RegExp('/api/isEnable' + ".*"), "post", (options) => {
 Mock.mock(RegExp('/api/addRoles' + ".*"), "post", (options) => {
 //  将传进来的isEnable转化为布尔值
   let form = JSON.parse(options.body)
-  console.log(typeof form.isEnable)
+//  console.log(typeof form.isEnable)
   allUser.unshift(form)
 })

@@ -1,8 +1,8 @@
 // 将得到的菜单数据格式化
 
 function formatRouterTree (data) {
-  let parent = data.filter(p => p.pid === '0') // 获取第一层路由
-  let children = data.filter(p => p.pid !== '0') // 获取第二层子路由
+  let parent = data.filter(p => p.pid === 0) // 获取第一层路由
+  let children = data.filter(p => p.pid !== 0) // 获取第二层子路由
   dataToTree (parent, children) // 调用
   function dataToTree (parent, children) {
     parent.map(p => {
@@ -35,7 +35,7 @@ function generateRouter (userRouter) {
     let routes = {
       path: r.path,
       name: r.name,
-      component: () => import(`@/pages/${r.name}/${r.name}`),
+      component: r.name,
       meta: {
         title: r.title,
         icon: r.icon

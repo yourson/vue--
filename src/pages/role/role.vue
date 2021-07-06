@@ -38,7 +38,7 @@
     >
       <el-table-column type="index" label="#"></el-table-column>
       <el-table-column prop="id" label="用户id"></el-table-column>
-      <el-table-column prop="id" label="角色uid"></el-table-column>
+      <el-table-column prop="uid" label="角色uid"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="roles" label="角色"></el-table-column>
       <el-table-column prop="password" label="密码" ></el-table-column>
@@ -55,7 +55,7 @@
       <el-table-column prop="token" label="token值" ></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="drawer=true">
+          <el-button type="primary" size="small" @click="lookUp(scope)">
             查看
           </el-button>
         </template>
@@ -73,23 +73,19 @@
       @current-change="handleCurrentChange"
     >
     </el-pagination>
-    <!--抽屉-->
-    <el-drawer
-      title="我是标题"
-      :visible.sync="drawer"
-      :with-header="false">
-      <span>我来啦!</span>
-    </el-drawer>
+    <roleDrawer :drawerData="drawerData" @drawerClose="drawerClose"></roleDrawer>
     <roleAdd :addVisible="addVisible" @roleAddBox="roleAddBox"></roleAdd>
   </div>
 </template>
 
 <script>
 import roleAdd from './roleAdd'
+import roleDrawer from './roleDrawer'
 export default {
   name: 'role',
   components: {
-    roleAdd
+    roleAdd,
+    roleDrawer
   },
   data () {
     return {
@@ -100,21 +96,51 @@ export default {
       },
       total: 0,
       tableData: [], // 表格数据
-      drawer: false, // 抽屉关闭与打开标识
       addVisible: false,
-      isEnable: false,
+      isEnable: false, // switch是否选中和切换
+      drawerData: {
+        uid: 0,
+        drawer: false,
+        defaultExpandedKeys: [], // 默认展开
+        defaultCheckedKeys: [], // 默认选中
+        treeData:  [], // tree数据容器
+      }
     }
   },
   created () {
-    this.getTableData()
+    this.getTableData() // 获取表格数据
   },
   methods: {
+    // 查看函数
+    async lookUp (scope) {
+      this.drawerData.drawer=true
+      let res = await this.$http.get('api/getTreeData',{
+        params: scope.row.uid
+      })
+      this.drawerData.uid = scope.row.uid
+      let { treeData, auth } = res.data
+      this.drawerData.treeData = treeData
+      this.drawerData.defaultCheckedKeys = auth
+      this.open(this.drawerData.treeData)
+    },
+    // 默认展开配置函数
+    open (data) {
+      data.forEach(item => {
+        if (item.children) {
+          this.drawerData.defaultExpandedKeys.push(item.id)
+          this.open(item.children)
+        }
+      })
+    },
+    // 关闭drawer抽屉函数
+    drawerClose () {
+      this.drawerData.drawer = false
+    },
     async getTableData () {
       let res = await this.$http.get('/api/roles',{params:this.queryInfo})
       const { total, tableData} = res.data
       this.total = total; // 数据条数
       this.tableData = tableData // 获取table数据
-
     },
     handleSizeChange (newSize) {
       this.queryInfo.pageSize = newSize

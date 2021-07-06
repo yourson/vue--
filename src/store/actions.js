@@ -7,6 +7,7 @@ const actions = {
   async getAuthRouter (context, uid) {
     let res = await get('/api/getMenuData', {uid}) // 获取路由菜单数据
     let payLoad = formatRouterTree(res) // 第一次加工 - 生成含有children的数组
+//    console.log(payLoad)
 //    let asyncRoutes = generateRouter(payLoad) // 第二次加工 - 生成路由
 
     context.commit('getAuthRouter', payLoad)

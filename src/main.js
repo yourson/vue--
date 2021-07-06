@@ -16,6 +16,12 @@ Vue.prototype.$echarts = eCharts
 import {get,post} from './utils/ajax';
 Vue.prototype.$http = {get,post};
 
+//import VueQuillEditor from 'vue-quill-editor'
+//import 'quill/dist/quill.core.css'
+//import 'quill/dist/quill.snow.css'
+//import 'quill/dist/quill.bubble.css'
+//Vue.use(VueQuillEditor);
+
 // 引入mock
 if (process.env.NODE_ENV !== 'production') require('./mock');
 

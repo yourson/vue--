@@ -10,6 +10,163 @@ VueRouter.prototype.push = function push(location) {
 
 //import store from '@/store/store'
 
+const routers = [
+  {
+    id: 1,
+    pid: 0, // 代表一级路由
+    path: '/homePage',
+    name: 'homePage',
+    title: '系统首页',
+    icon: 'el-icon-s-home',
+    disabled: true
+  },
+  {
+    id: 2,
+    pid: 0,
+    path: '/roles',
+    name: 'roles',
+    title: '角色控制',
+    icon: 'el-icon-s-custom',
+    disabled: false
+  },
+  {
+    id: 3,
+    pid: 0,
+    path: '/table',
+    name: 'table',
+    title: '基础表格',
+    icon: 'el-icon-menu',
+    disabled: false
+  },
+  {
+    id: 4,
+    pid: 0,
+    path: '/tabs',
+    name: 'tabs',
+    title: 'tab选项卡',
+    icon: 'el-icon-document-copy',
+    disabled: false
+  },
+  {
+    id: 5,
+    pid: 0,
+    title: '表单相关',
+    icon: 'el-icon-menu',
+    disabled: false
+  },
+  {
+    id: 6,
+    pid: 5,
+    path: '/basicForm',
+    name: 'basicForm',
+    title: '基本表单',
+    disabled: false
+  },
+  {
+    id: 7,
+    pid: 5,
+    title: '三级菜单',
+    disabled: false
+  },
+  {
+    id: 8,
+    pid: 7,
+    path: '/editor',
+    name: 'editor',
+    title: '富文本编辑器',
+    disabled: false
+  },
+  {
+    id: 9,
+    pid: 7,
+    path: '/markdown',
+    name: 'markdown',
+    title: 'markdown编辑器',
+    disabled: false
+  },
+  {
+    id: 10,
+    pid: 5,
+    path: '/upload',
+    name: 'upload',
+    title: '文件上传',
+    disabled: false
+  },
+  {
+    id: 11,
+    pid: 0,
+    path: '/eCharts',
+    name: 'eCharts',
+    title: 'eCharts图表',
+    icon: 'el-icon-pie-chart',
+    disabled: false
+  },
+  {
+    id: 12,
+    pid: 0,
+    title: '拖拽组件',
+    icon: 'el-icon-rank',
+    disabled: false
+  },
+  {
+    id: 13,
+    pid: 12,
+    name: 'drag',
+    path: '/drag',
+    title: '拖拽列表',
+    disabled: false
+  },
+  {
+    id: 14,
+    pid: 12,
+    name: 'dialog',
+    path: '/dialog',
+    title: '拖拽弹框',
+    disabled: false
+  },
+  {
+    id: 15,
+    pid: 0,
+    name: 'i18n',
+    path: '/i18n',
+    title: '国际化功能',
+    icon: 'el-icon-place',
+    disabled: false
+  },
+  {
+    id: 16,
+    pid: 0,
+    title: '错误处理',
+    icon: 'el-icon-warning-outline',
+    disabled: false
+  },
+  {
+    id: 17,
+    pid: 16,
+    name: 'permission',
+    path: '/permission',
+    title: '权限测试',
+    disabled: false
+  },
+  {
+    id: 18,
+    pid: 16,
+    name: 'notFound',
+    path: '/notFound',
+    title: '404页面',
+    disabled: false
+  },
+  {
+    id: 19,
+    pid: 0,
+    name: 'donate',
+    path: '/donate',
+    title: '支持作者',
+    icon: 'el-icon-help',
+    disabled: false
+  },
+]
+
 // 引入组件 - 必须写法
 const login = () => import('@/pages/login/login')
 const home = () => import('@/pages/home/home')
@@ -104,6 +261,22 @@ const routes = [
 ]
 
 
+
+let newData = []
+
+function aaa (data) {
+  newData = routers.filter(a => {
+    data.forEach(b => {
+      if (b.children) {
+        aaa(b.children)
+      }
+      return a.name === b.name
+    })
+  })
+}
+aaa(routes)
+
+console.log(newData)
 
 const router = new VueRouter({
   mode: "history",
