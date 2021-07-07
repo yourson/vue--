@@ -1,5 +1,5 @@
 import {get} from '../utils/ajax' // 导入axios
-import { formatRouterTree } from '@/utils/formatRouterTree' // 导入路由工具函数
+import { formatRouterTree, generateRouter } from '@/utils/formatRouterTree' // 导入路由工具函数
 
 const actions = {
   // 获取路由数据 - 传递数据uid获得不同权限菜单
@@ -9,7 +9,6 @@ const actions = {
     let payLoad = formatRouterTree(res) // 第一次加工 - 生成含有children的数组
 //    console.log(payLoad)
 //    let asyncRoutes = generateRouter(payLoad) // 第二次加工 - 生成路由
-
     context.commit('getAuthRouter', payLoad)
   }
 }

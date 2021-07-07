@@ -8,164 +8,7 @@ VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-//import store from '@/store/store'
-
-const routers = [
-  {
-    id: 1,
-    pid: 0, // 代表一级路由
-    path: '/homePage',
-    name: 'homePage',
-    title: '系统首页',
-    icon: 'el-icon-s-home',
-    disabled: true
-  },
-  {
-    id: 2,
-    pid: 0,
-    path: '/roles',
-    name: 'roles',
-    title: '角色控制',
-    icon: 'el-icon-s-custom',
-    disabled: false
-  },
-  {
-    id: 3,
-    pid: 0,
-    path: '/table',
-    name: 'table',
-    title: '基础表格',
-    icon: 'el-icon-menu',
-    disabled: false
-  },
-  {
-    id: 4,
-    pid: 0,
-    path: '/tabs',
-    name: 'tabs',
-    title: 'tab选项卡',
-    icon: 'el-icon-document-copy',
-    disabled: false
-  },
-  {
-    id: 5,
-    pid: 0,
-    title: '表单相关',
-    icon: 'el-icon-menu',
-    disabled: false
-  },
-  {
-    id: 6,
-    pid: 5,
-    path: '/basicForm',
-    name: 'basicForm',
-    title: '基本表单',
-    disabled: false
-  },
-  {
-    id: 7,
-    pid: 5,
-    title: '三级菜单',
-    disabled: false
-  },
-  {
-    id: 8,
-    pid: 7,
-    path: '/editor',
-    name: 'editor',
-    title: '富文本编辑器',
-    disabled: false
-  },
-  {
-    id: 9,
-    pid: 7,
-    path: '/markdown',
-    name: 'markdown',
-    title: 'markdown编辑器',
-    disabled: false
-  },
-  {
-    id: 10,
-    pid: 5,
-    path: '/upload',
-    name: 'upload',
-    title: '文件上传',
-    disabled: false
-  },
-  {
-    id: 11,
-    pid: 0,
-    path: '/eCharts',
-    name: 'eCharts',
-    title: 'eCharts图表',
-    icon: 'el-icon-pie-chart',
-    disabled: false
-  },
-  {
-    id: 12,
-    pid: 0,
-    title: '拖拽组件',
-    icon: 'el-icon-rank',
-    disabled: false
-  },
-  {
-    id: 13,
-    pid: 12,
-    name: 'drag',
-    path: '/drag',
-    title: '拖拽列表',
-    disabled: false
-  },
-  {
-    id: 14,
-    pid: 12,
-    name: 'dialog',
-    path: '/dialog',
-    title: '拖拽弹框',
-    disabled: false
-  },
-  {
-    id: 15,
-    pid: 0,
-    name: 'i18n',
-    path: '/i18n',
-    title: '国际化功能',
-    icon: 'el-icon-place',
-    disabled: false
-  },
-  {
-    id: 16,
-    pid: 0,
-    title: '错误处理',
-    icon: 'el-icon-warning-outline',
-    disabled: false
-  },
-  {
-    id: 17,
-    pid: 16,
-    name: 'permission',
-    path: '/permission',
-    title: '权限测试',
-    disabled: false
-  },
-  {
-    id: 18,
-    pid: 16,
-    name: 'notFound',
-    path: '/notFound',
-    title: '404页面',
-    disabled: false
-  },
-  {
-    id: 19,
-    pid: 0,
-    name: 'donate',
-    path: '/donate',
-    title: '支持作者',
-    icon: 'el-icon-help',
-    disabled: false
-  },
-]
+import store from '@/store/store'
 
 // 引入组件 - 必须写法
 const login = () => import('@/pages/login/login')
@@ -174,6 +17,10 @@ const homePage = () => import('@/pages/homePage/homePage')
 const role = () => import('@/pages/role/role')
 const tabs = () => import('@/pages/tabs/tabs')
 const table = () => import('@/pages/table/table')
+const formRelated = () => import('@/pages/form/formRelated')
+
+const threeLevelMenu = () => import('@/pages/form/threeLevelMenu')
+
 const basicForm = () => import('@/pages/form/basicForm')
 const quillEditor = () => import('@/pages/form/quillEditor')
 const upload = () => import('@/pages/form/upload')
@@ -185,7 +32,7 @@ const eCharts = () => import('@/pages/eCharts/index')
 const notFound = () => import("@/components/common/notFound")
 
 // 设置不需要权限的菜单
-const routes = [
+let routes = [
   {
     path: '/',
     redirect: '/login',
@@ -214,69 +61,136 @@ const routes = [
       {
         path: '/setUp',
         name: 'setUp',
-        component: setUp
+        component: setUp,
+        meta: {
+          icon: '',
+          title: ''
+        }
       },
-      {
-        path: '/homePage',
-        name: 'homePage',
-        component: homePage,
-      },
-      {
-        path: '/roles',
-        name: 'roles',
-        component: role,
-      },
-      {
-        path: '/tabs',
-        name: 'tabs',
-        component: tabs,
-      },
-      {
-        path: '/table',
-        name: 'table',
-        component: table,
-      },
-      {
-        path: '/basicForm',
-        name: 'basicForm',
-        component: basicForm,
-      },
-      {
-        path: '/editor',
-        name: 'editor',
-        component: quillEditor,
-      },
-      {
-        path: '/upload',
-        name: 'upload',
-        component: upload
-      },
-      {
-        path: '/eCharts',
-        name: 'eCharts',
-        component: eCharts,
-      },
+
     ]
   }
 ]
 
+// 异步路由 - 需要权限验证的路由列表
+let asyncRouter = [
+  {
+    path: '/homePage',
+    name: 'homePage',
+    component: homePage,
+    meta: {
+      icon: 'el-icon-s-home',
+      title: '系统首页'
+    }
+  },
+  {
+    path: '/roles',
+    name: 'roles',
+    component: role,
+    meta: {
+      icon: 'el-icon-s-custom',
+      title: '角色控制'
+    }
+  },
+  {
+    path: '/table',
+    name: 'table',
+    component: table,
+    meta: {
+      icon: 'el-icon-menu',
+      title: '基础表格'
+    }
+  },
+  {
+    path: '/tabs',
+    name: 'tabs',
+    component: tabs,
+    meta: {
+      icon: 'el-icon-document-copy',
+      title: 'tab选项卡'
+    }
+  },
+  {
+    path: '/formRelated',
+    name: 'formRelated',
+    component: formRelated,
+//    redirect: '/basicForm',
+    meta: {
+      icon: 'el-icon-menu',
+      title: '表单相关'
+    },
+    children: [
+      {
+        path: '/basicForm',
+        name: 'basicForm',
+        component: basicForm,
+        meta: {
+          title: '基本表单'
+        }
+      },
+      {
+        path: '/threeLevelMenu',
+        name: 'threeLevelMenu',
+//        redirect: '/editor',
+        component: threeLevelMenu,
+        meta: {
+          title: '三级菜单'
+        },
+        children: [
+          {
+            path: '/editor',
+            name: 'editor',
+            component: quillEditor,
+            meta: {
+              title: '富文本编辑器'
+            }
+          },
+        ]
+      },
+      {
+        path: '/upload',
+        name: 'upload',
+        component: upload,
+        meta: {
+          title: '文件上传'
+        }
+      },
+    ]
+  },
+  {
+    path: '/eCharts',
+    name: 'eCharts',
+    component: eCharts,
+    meta: {
+      icon: 'el-icon-pie-chart',
+      title: 'eCharts图表'
+    }
+  },
+]
 
-
-let newData = []
-
-function aaa (data) {
-  newData = routers.filter(a => {
-    data.forEach(b => {
-      if (b.children) {
-        aaa(b.children)
+// 将后台返回路由与前台路由做对比 - 利用回调函数
+function aaa (userRoutes, allRoutes) {
+  let newData = []
+  userRoutes.forEach(a => {
+    allRoutes.forEach(b => {
+      if (b.meta.title === a.title) {
+        if (b.children && b.children.length > 0) {
+          b.children = aaa(a.children, b.children)
+        }
+        newData.push(b)
       }
-      return a.name === b.name
     })
   })
+  return newData
 }
-aaa(routes)
 
-console.log(newData)
+let realRouter = aaa(store.state.authRoutes,asyncRouter)
+// 将筛选出来的异步路由添加到默认路由中
+for (let i = 0; i < routes.length; i++) {
+  if (routes[i].name === 'home') {
+    routes[i].children = routes[i].children.concat(realRouter)
+  }
+}
 
 const router = new VueRouter({
   mode: "history",

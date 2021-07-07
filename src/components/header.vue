@@ -11,9 +11,12 @@
         <!--面包屑-->
         <div class="bread-crumb">
           <el-breadcrumb class="color-bread-crumb" separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item >活动列表</el-breadcrumb-item>
+            <el-breadcrumb-item
+              v-for="item in breadList"
+              :key="item.path"
+            >
+              {{item.meta.title}}
+            </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
         <div class="userInfo">
@@ -67,19 +70,33 @@ export default {
     return {
       fullscreen: false,
       message: 1,
+      breadList: [] // 面包屑数据
     }
   },
   computed:{
     // 获取vuex中的名字
     ...mapState(['username', "collapse"])
   },
-  created () {
-    console.log(this.$route)
+  watch: {
+    $route () {
+      this.getBreadcrumb()
+    }
   },
   methods: {
     ...mapMutations({
       isFold: 'isFold'
     }),
+    getBreadcrumb () {
+      // 深拷贝了一份，避免影响原route
+      let matched = [...this.$route.matched]; //拿到显示的路由路径
+      // 去除第一个home页面（动态菜单在home页面下）
+      if (matched[0].name === "home") {
+        matched.splice(0,1)
+        this.breadList = matched
+      }
+//      this.breadList = []
+//      console.log(matched)
+    },
     menuChange () {
       // 切换菜单
       this.isFold()

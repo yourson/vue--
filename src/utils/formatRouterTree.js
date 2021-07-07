@@ -29,26 +29,31 @@ function formatRouterTree (data) {
   return parent
 }
 
-// 生成routes的路由工具函数
+// 生成routes的路由工具函数 - 目测是没存在意义
 function generateRouter (userRouter) {
-  let newRouters = userRouter.map(r => {
+  // 如果存在子菜单 就继续进行上面的操作
+  return userRouter.map(r => {
     let routes = {
-      path: r.path,
-      name: r.name,
-      component: r.name,
-      meta: {
-        title: r.title,
-        icon: r.icon
-      }
+      id: r.id,
     }
-    // 如果存在子菜单 就继续进行上面的操作
+    if (r.path) {
+      routes.path = r.path
+    }
+    if (r.name) {
+      routes.name = r.name
+    }
+    if (r.title) {
+      routes.meta.title = r.title
+    }
+    if (r.icon) {
+      routes.meta.title = r.icon
+    }
+
     if (r.children) {
       routes.children = generateRouter(r.children)
     }
     return routes
   })
-  return newRouters
 }
-
 
 export { formatRouterTree, generateRouter };

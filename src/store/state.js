@@ -11,8 +11,8 @@ const state = {
   collapse: JSON.parse(sessionStorage.getItem("collapse") || "true"),
   // tags面包屑导航
   tagList: JSON.parse(sessionStorage.getItem("tagList") || '[]'),
-  // 后端路由数据
-  authRoutes: JSON.parse(sessionStorage.getItem("authRoutes")),
+  // 在router文件中使用的路由
+  authRoutes: JSON.parse(sessionStorage.getItem("authRoutes") || '[]'),
 }
 
 export default state

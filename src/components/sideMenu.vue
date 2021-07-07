@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations} from 'vuex'
+import { mapState, mapMutations, mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -88,6 +88,7 @@ export default {
     }
   },
   computed: {
+//    ...mapGetters(['authRoutes']),
     ...mapState(['collapse','tagList','authRoutes']),
   },
   created () {
