@@ -5,8 +5,9 @@
 </template>
 
 <script>
+// 这是拖拽页面的容器组件 - 也可以叫index组件
 export default {
-  name: 'formRelated',
+  name: 'drag',
   data () {
     return {}
   },

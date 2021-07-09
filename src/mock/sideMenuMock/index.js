@@ -105,16 +105,16 @@ const routers = [
   {
     id: 13,
     pid: 12,
-    name: 'drag',
-    path: '/drag',
-    title: '拖拽列表',
+    name: 'dragListTable',
+    path: '/dragListTable',
+    title: '拖拽列表和表格',
     disabled: false
   },
   {
     id: 14,
     pid: 12,
-    name: 'dialog',
-    path: '/dialog',
+    name: 'dragDialog',
+    path: '/dragDialog',
     title: '拖拽弹框',
     disabled: false
   },
@@ -153,8 +153,8 @@ const routers = [
   {
     id: 19,
     pid: 0,
-    name: 'donate',
-    path: '/donate',
+    name: 'authorC',
+    path: '/authorC',
     title: '支持作者',
     icon: 'el-icon-help',
     disabled: false

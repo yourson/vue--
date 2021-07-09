@@ -17,19 +17,28 @@ const homePage = () => import('@/pages/homePage/homePage')
 const role = () => import('@/pages/role/role')
 const tabs = () => import('@/pages/tabs/tabs')
 const table = () => import('@/pages/table/table')
+
 const formRelated = () => import('@/pages/form/formRelated')
-
 const threeLevelMenu = () => import('@/pages/form/threeLevelMenu')
-
 const basicForm = () => import('@/pages/form/basicForm')
 const quillEditor = () => import('@/pages/form/quillEditor')
 const upload = () => import('@/pages/form/upload')
+
+const drag = () => import('@/pages/drag')
+//const dragList = () => import('@/pages/drag/dragList')
+const dragListTable = () => import('@/pages/drag/dragListTable')
+
+//const dragTable = () => import('@/pages/drag/dragTable')
+
+const dragDialog = () => import('@/pages/drag/dragDialog')
 
 const personalHomePage = () => import('@/components/personalHomePage')
 const setUp = () => import('@/components/setUp')
 
 const eCharts = () => import('@/pages/eCharts/index')
 const notFound = () => import("@/components/common/notFound")
+const authorC = () => import("@/pages/authorC/authorC")
+
 
 // 设置不需要权限的菜单
 let routes = [
@@ -166,15 +175,51 @@ let asyncRouter = [
       title: 'eCharts图表'
     }
   },
+  {
+    path: '/drag',
+    name: 'drag',
+    component: drag,
+    meta: {
+      icon: 'el-icon-rank',
+      title: '拖拽组件'
+    },
+    children: [
+      {
+        path: '/dragListTable',
+        name: 'dragListTable',
+        component: dragListTable,
+        meta: {
+          title: '拖拽列表和表格'
+        },
+      },
+      {
+        path: '/dragDialog',
+        name: 'dragDialog',
+        component: dragDialog,
+        meta: {
+          title: '拖拽弹框'
+        }
+      },
+    ]
+  },
+  {
+    path: '/authorC',
+    name: 'authorC',
+    component: authorC,
+    meta: {
+      icon: 'el-icon-help',
+      title: '支持作者'
+    }
+  }
 ]
-
+//console.log(store.state.authRoutes)
 // 将后台返回路由与前台路由做对比 - 利用回调函数
 function aaa (userRoutes, allRoutes) {
   let newData = []
   userRoutes.forEach(a => {
     allRoutes.forEach(b => {
       if (b.meta.title === a.title) {
-        if (b.children && b.children.length > 0) {
+        if (a.children && a.children.length > 0) {
           b.children = aaa(a.children, b.children)
         }
         newData.push(b)
@@ -183,12 +228,15 @@ function aaa (userRoutes, allRoutes) {
   })
   return newData
 }
+//console.log(store.state.authRoutes)
 
-let realRouter = aaa(store.state.authRoutes,asyncRouter)
-// 将筛选出来的异步路由添加到默认路由中
-for (let i = 0; i < routes.length; i++) {
-  if (routes[i].name === 'home') {
-    routes[i].children = routes[i].children.concat(realRouter)
+if (store.state.authRoutes) {
+  let realRouter = aaa(store.state.authRoutes,asyncRouter)
+  // 将筛选出来的异步路由添加到默认路由中
+  for (let i = 0; i < routes.length; i++) {
+    if (routes[i].name === 'home') {
+      routes[i].children = routes[i].children.concat(realRouter)
+    }
   }
 }
 
